@@ -10,7 +10,3 @@ class GreetingService(object):
     @rpc
     def hello(self,toGreet):
         return json.dumps({'greeting': "Hello, {}!".format(toGreet)})
-
-    @http('GET','/<string:toGreet>')
-    def helloHttp(self, request, toGreet):
-        return json.dumps({'greeting': "Hello, {}!".format(toGreet)})   
