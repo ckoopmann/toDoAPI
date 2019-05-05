@@ -12,7 +12,7 @@ class Todo(DeclBase):
     name = Column(String)
     date = Column(DateTime)
 
-with open('config.yml','r') as stream:
+with open('../config.yml','r') as stream:
     config = load(stream, Loader)
 
 engine = create_engine(config['DB_URIS']['TodoService:Base'])

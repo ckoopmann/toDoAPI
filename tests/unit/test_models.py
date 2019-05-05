@@ -1,4 +1,5 @@
 from api.models import Todo
+from dateutil.parser import parse
 
 def test_can_create_todo(db_session, todo):
     db_session.add(todo)
@@ -21,3 +22,17 @@ def test_can_delete_todo(db_session, todo):
     db_session.commit()
     num_left = db_session.query(Todo).filter(Todo.id == todo.id).count()
     assert num_left == 0
+
+def test_can_list_todos(db_session):
+
+    todo_list = [Todo(name = 'Cleaning', date = parse('2019-04-23 12:00:00')),
+    Todo(name = 'Homework', date = parse('2019-04-23 14:00:00'))]
+
+    db_session.add_all(todo_list)
+    db_session.commit()
+    results = db_session.query(Todo).all()
+
+    assert len(results) == len(todo_list)
+
+    for i in range(len(results)):
+        assert results[i] == todo_list[i]

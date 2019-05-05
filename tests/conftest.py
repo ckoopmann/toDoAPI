@@ -1,8 +1,7 @@
 import pytest
 import sys, os
 sys.path.append(os.path.realpath(os.path.dirname(__file__)+"/.."))
-from api.models import DeclBase
-
+from api.models import DeclBase, Todo
 
 @pytest.fixture(scope='session')
 def db_url():
@@ -16,8 +15,8 @@ def db_url():
 
     For more information see: https://github.com/onefinestay/nameko-sqlalchemy
     """
-    return 'sqlite:///:memory:'
-
+    url = 'sqlite:///test.db'
+    return url
 
 @pytest.fixture(scope="session")
 def model_base():
