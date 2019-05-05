@@ -4,11 +4,6 @@ from mock import call
 from sqlalchemy import create_engine
 from api.models import Todo
 
-@pytest.fixture()
-def db_create_table(db_url):
-        engine = create_engine(db_url)
-        Todo.metadata.create_all(engine)
-
 
 def test_can_list_todos(todo_service, web_session, db_session):
     response = web_session.get('/todo/list/')
