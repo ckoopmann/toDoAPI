@@ -1,51 +1,65 @@
 from datetime import datetime
 import dateutil.parser
-from app import Todo
 from nameko.rpc import rpc
+from nameko.web.handlers import http
 from nameko_sqlalchemy import transaction_retry, Database
 from models import Todo, DeclBase
 from schemas import TodoSchema
+import json
 
 class TodoService:
     name = "TodoService"
 
     db = Database(DeclBase)
 
-    @rpc
+    @http('POST','/todo/add/')
     @transaction_retry()
-    def add(self, name, date):
+    def add(self, request):
+        name = request.args.get('name')
+        print(name)
+        date = request.args.get('date')
+        print(date)
         if(isinstance(date, str)):
             date = dateutil.parser.parse(date)
+        print(date)
         obj =Todo(name = name, date = date)
+        schema = TodoSchema()
         session = self.db.get_session()
         session.add(obj)
         session.commit()
+        response = json.dumps(schema.dump(obj).data)
         session.close()
+        return response
 
-    @rpc
+
+    @http('GET','/todo/delete/<int:id>')
     @transaction_retry()
-    def delete(self, id):
+    def delete(self, request, id):
+        schema = TodoSchema()
         session = self.db.get_session()
+        obj = session.query(Todo).filter(Todo.id == id).first()
+        response = json.dumps(schema.dump(obj).data)
         session.query(Todo).filter(Todo.id == id).delete()
         session.commit()
         session.close()
+        return response
 
 
-    @rpc
+    @http('GET','/todo/get/<int:id>')
     @transaction_retry()
-    def get(self, id):
+    def get(self, request, id):
         session = self.db.get_session()
         results = session.query(Todo).filter(Todo.id == id).first()
         session.close()
         schema = TodoSchema()
-        return schema.dump(results).data
+        return json.dumps(schema.dump(results).data)
 
 
-    @rpc
+    @http('GET','/todo/list/')
     @transaction_retry()
-    def list(self):
+    def list(self, request):
         session = self.db.get_session()
         results = session.query(Todo).all()
         session.close()
         schema = TodoSchema(many = True)
-        return schema.dump(results).data
+        return json.dumps(schema.dump(results).data)
