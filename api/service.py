@@ -3,8 +3,8 @@ import dateutil.parser
 from nameko.rpc import rpc
 from nameko.web.handlers import http
 from nameko_sqlalchemy import transaction_retry, Database
-from models import Todo, DeclBase
-from schemas import TodoSchema
+from api.models import Todo, DeclBase
+from api.schemas import TodoSchema
 import json
 
 class TodoService:
