@@ -7,6 +7,7 @@ from api.models import Todo, DeclBase
 from api.schemas import TodoSchema
 import json
 
+
 class TodoService:
     name = "TodoService"
 
@@ -16,12 +17,9 @@ class TodoService:
     @transaction_retry()
     def add(self, request):
         name = request.args.get('name')
-        print(name)
         date = request.args.get('date')
-        print(date)
         if(isinstance(date, str)):
             date = dateutil.parser.parse(date)
-        print(date)
         obj =Todo(name = name, date = date)
         schema = TodoSchema()
         session = self.db.get_session()
