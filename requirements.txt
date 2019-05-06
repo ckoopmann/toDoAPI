@@ -1,0 +1,6 @@
+nameko_sqlalchemy
+nameko
+datetime
+python-dateutil
+sqlalchemy
+marshmallow
