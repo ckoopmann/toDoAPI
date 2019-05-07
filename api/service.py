@@ -1,11 +1,13 @@
+import json
+
 from datetime import datetime
-import dateutil.parser
-from nameko.rpc import rpc
+from dateutil.parser import parse
+
 from nameko.web.handlers import http
 from nameko_sqlalchemy import transaction_retry, Database
+
 from api.models import Todo, DeclBase
 from api.schemas import TodoSchema
-import json
 
 
 class TodoService:
@@ -20,7 +22,7 @@ class TodoService:
 
 
 
-    @http('POST','/todo/add/')
+    @http('POST', '/todo/add/')
     @transaction_retry()
     def add(self, request):
         """
@@ -43,7 +45,7 @@ class TodoService:
             }
         """
 
-        dict = json.loads(request.get_data(as_text = True))
+        dict = json.loads(request.get_data(as_text=True))
 
         try:
             #Get the name and date values from request. This might raise KeyError
@@ -51,11 +53,11 @@ class TodoService:
             date = dict['date']
 
             #If date value is a string try converting to datetime. This might raise Value Error
-            if(isinstance(date, str)):
-                date = dateutil.parser.parse(date)
+            if isinstance(date, str):
+                date = parse(date)
 
             #Create SQL Alchemy Todo Object and add new entry to the database
-            obj =Todo(name = name, date = date)
+            obj = Todo(name=name, date=date)
             schema = TodoSchema()
             session = self.db.get_session()
             session.add(obj)
@@ -66,13 +68,13 @@ class TodoService:
             session.close()
             return 201, response
 
-        # Handle errors resulting from incomplete or invalid data in the request and return corresponding response code
+        # Handle errors resulting from invalid data in the request
         except (ValueError, KeyError):
             return 400, 'Bad Request'
 
 
 
-    @http('GET','/todo/delete/<int:id>')
+    @http('GET', '/todo/delete/<int:id>')
     @transaction_retry()
     def delete(self, request, id):
         """
@@ -105,7 +107,7 @@ class TodoService:
         return response
 
 
-    @http('GET','/todo/get/<int:id>')
+    @http('GET', '/todo/get/<int:id>')
     @transaction_retry()
     def get(self, request, id):
         """
@@ -132,7 +134,7 @@ class TodoService:
         return json.dumps(schema.dump(results).data)
 
 
-    @http('GET','/todo/list/')
+    @http('GET', '/todo/list/')
     @transaction_retry()
     def list(self, request):
         """
@@ -162,5 +164,5 @@ class TodoService:
         session = self.db.get_session()
         results = session.query(Todo).all()
         session.close()
-        schema = TodoSchema(many = True)
+        schema = TodoSchema(many=True)
         return json.dumps(schema.dump(results).data)
