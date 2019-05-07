@@ -20,18 +20,25 @@ class TodoService:
     @http('POST','/todo/add/')
     @transaction_retry()
     def add(self, request):
-        name = request.args.get('name')
-        date = request.args.get('date')
-        if(isinstance(date, str)):
-            date = dateutil.parser.parse(date)
-        obj =Todo(name = name, date = date)
-        schema = TodoSchema()
-        session = self.db.get_session()
-        session.add(obj)
-        session.commit()
-        response = json.dumps(schema.dump(obj).data)
-        session.close()
-        return response
+        dict = json.loads(request.get_data(as_text = True))
+
+        try:
+            name = dict['name']
+            date = dict['date']
+            if(isinstance(date, str)):
+                date = dateutil.parser.parse(date)
+            obj =Todo(name = name, date = date)
+            schema = TodoSchema()
+            session = self.db.get_session()
+            session.add(obj)
+            session.commit()
+            response = json.dumps(schema.dump(obj).data)
+            session.close()
+            return 201, response
+            
+        except (ValueError, KeyError):
+            return 400, 'Bad Request'
+
 
 
     @http('GET','/todo/delete/<int:id>')

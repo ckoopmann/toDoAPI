@@ -28,6 +28,7 @@ import api.models
 
 
 
+
 @pytest.fixture
 def config(web_config, rabbit_config, db_url):
     gateway_config = rabbit_config.copy()

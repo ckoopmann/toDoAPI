@@ -9,5 +9,5 @@ test_cases = [('EnglishLesson', parse("2018-05-04 12:00:12")),
 
 @pytest.fixture(params = test_cases)
 def todo(request):
-        return Todo(name = request.param[1],
+        return Todo(name = request.param[0],
                     date = request.param[1])
