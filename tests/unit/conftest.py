@@ -14,5 +14,4 @@ test_cases = [('EnglishLesson', parse("2018-05-04 12:00:12")),
 def todo(request):
     """ Pytest fixture to create Todo model instance from each of the test cases
     """
-        return Todo(name = request.param[0],
-                    date = request.param[1])
+    return Todo(name = request.param[0], date = request.param[1])

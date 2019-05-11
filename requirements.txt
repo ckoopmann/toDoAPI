@@ -4,3 +4,4 @@ datetime
 python-dateutil
 sqlalchemy
 marshmallow
+pytest
