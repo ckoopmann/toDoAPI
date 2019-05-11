@@ -1,4 +1,5 @@
 # toDoAPI
+[![Build Status](https://travis-ci.org/ckoopmann/toDoAPI.svg?branch=master)](https://travis-ci.org/ckoopmann/toDoAPI)
 Simple nameko api to save todos
 
 This api will enable the client to save and retrieve todos using nameko and nameko-sqlalchemy
