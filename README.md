@@ -27,18 +27,48 @@ This assumes that you have Python 3.7+ and Pip installed and have navigated to t
 
 ## Query API
 This api accepts requests to add, retrieve and delete a single ToDo Task as well as lis all entries currently stored.
+
 ###Add Todo
+
 To Add a todo one submits a post request with the name and date of the task as json data:
 
 ```sh
-$ curl -XPOST -d '{"name": "English", "date": "2017-01-12 12:00:00"}' 'http://localhost:8000/todo/add/'
+$ curl -XPOST -d '{"name": "EnglishLesson", "date": "2017-01-12 12:00:00"}' 'http://localhost:8000/todo/add/'
 ```
 
 On sucessfull creation of the todo the api response with status code 200 and the data as it was entered into the database including autoincremented id column and parsed date column:
 
 ```sh
-{"name": "English", "id": 9, "date": "2017-01-12T12:00:00+00:00"}
+{"name": "EnglishLesson", "id": 1, "date": "2017-01-12T12:00:00+00:00"}
 ```
+
+###Get Todo
+
+To retrieve a single entry one posts a get request to `todo/get/<int:todo_id>` as below, with the same response as was returned upon creation of the entry:
+
+```sh
+$ curl  'http://localhost:8000/todo/get/1'
+```
+
+###Delete Todo
+
+To delete an entry post a get request to  `todo/delete/<int:todo_id>` as below, with the api responding with the data of the deleted entry in the same format as above:
+
+```sh
+$ curl  'http://localhost:8000/todo/delete/1'
+```
+
+###List Todos
+
+To list all entries currently stored post a get request to  `todo/list/` with the answer being a json array of entries:
+
+```sh
+$ curl  'http://localhost:8000/todo/list/'
+```
+```sh
+[{"name": "EnglishLesson", "id": 2, "date": "2019-02-01T00:00:00+00:00"}, {"name": "FrenchLesson", "id": 3, "date": "2019-02-01T00:00:00+00:00"}, {"name": "ChineseLesson", "id": 4, "date": "2019-02-01T00:00:00+00:00"}]
+```
+
 
 
 ## Run tests
