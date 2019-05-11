@@ -66,7 +66,9 @@ To list all entries currently stored post a get request to  `todo/list/` with th
 $ curl  'http://localhost:8000/todo/list/'
 ```
 ```sh
-[{"name": "EnglishLesson", "id": 2, "date": "2019-02-01T00:00:00+00:00"}, {"name": "FrenchLesson", "id": 3, "date": "2019-02-01T00:00:00+00:00"}, {"name": "ChineseLesson", "id": 4, "date": "2019-02-01T00:00:00+00:00"}]
+[{"name": "EnglishLesson", "id": 2, "date": "2019-02-01T00:00:00+00:00"},
+ {"name": "FrenchLesson", "id": 3, "date": "2019-02-01T00:00:00+00:00"},
+ {"name": "ChineseLesson", "id": 4, "date": "2019-02-01T00:00:00+00:00"}]
 ```
 
 
