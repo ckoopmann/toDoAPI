@@ -25,7 +25,7 @@ And then running
 
 `$ nameko run --config config.yml api.service`
 
-This assumes that you have Python 3.7+ and Pip installed and have navigated to the top level of this repository.
+This assumes that you have Python 3.7+ and Pip installed, the RabbitMQ server running with default settings and have navigated to the top level of this repository.
 
 ## Query API
 This api accepts requests to add, retrieve and delete a single ToDo Task as well as lis all entries currently stored.
