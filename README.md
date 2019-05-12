@@ -5,6 +5,12 @@ Simple nameko api to save todos
 
 This api will enable the client to save and retrieve todos using nameko and nameko-sqlalchemy
 
+## Prerequisites
+
+* [Python 3](https://www.python.org/downloads/)
+* [Docker](https://www.docker.com/)
+* [RabbitMQ](https://www.rabbitmq.com/)
+
 ## Starting API
 
 ### Using Docker
