@@ -1,3 +1,6 @@
+""" These interface tests check wether the API as a whole behaves as expected on a set of
+different test requests posted via HTTP.
+"""
 import json
 import pytest
 from mock import call
