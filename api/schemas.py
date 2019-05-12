@@ -1,3 +1,5 @@
+""" This file creates the marshmallow Schema to easily convert Todo Objects to JSON
+"""
 from marshmallow import Schema, fields
 
 class TodoSchema(Schema):
